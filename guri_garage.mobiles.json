@@ -1,0 +1,55 @@
+[{
+  "_id": {
+    "$oid": "6710856b1b48802881477214"
+  },
+  "phoneName": "Iphone 11",
+  "price": "19,999",
+  "thumbnail": "https://rukminim2.flixcart.com/image/312/312/k2jbyq80pkrrdj/mobile-refurbished/x/j/s/iphone-11-128-d-mwm02hn-a-apple-0-original-imafkg242ugz8hwc.jpeg?q=70",
+  "description": "Beautiful Design Featuring a 15.49-cm (6.1) all-screen Liquid Retina LCD and a glass and aluminum design, the iPhone 11 is as beautiful as it gets. Also, the IP68 rating ensures that is water-resistant up to 2 meters for 30 minutes.",
+  "brand": "Iphone",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67109d791b488028814866ca"
+  },
+  "phoneName": "Iphone 12",
+  "price": "23,999",
+  "thumbnail": "https://rukminim2.flixcart.com/image/312/312/kg8avm80/mobile/y/7/n/apple-iphone-12-dummyapplefsn-original-imafwg8dpyjvgg3j.jpeg?q=70",
+  "description": "Dive into a world of crystal-clear visuals with this iPhone’s Super Retina XDR Display. This beast of a smartphone packs the A14 Bionic chip to make for blazing-fast performance speeds. On top of that, its Dual-camera System, along with Night Mode, helps you click amazing pictures and selfies even when the lighting isn’t as good as you’d want it to be.",
+  "brand": "Iphone",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67109dbd1b488028814866ce"
+  },
+  "phoneName": "Redmi 8A",
+  "price": "6,999",
+  "thumbnail": "https://rukminim2.flixcart.com/image/312/312/k0y6cnk0/mobile/u/e/p/mi-redmi-8a-mzb8458in-original-imafkmhycvhcsrzm.jpeg?q=70",
+  "description": " High-capacity Battery The Redmi 8A features a 5000-mAh high-capacity battery, so you can watch more videos, click more pictures, play more games on a single charge. What’s more? It also supports 18 W Fast Charge, so you can get back in action, in no time.",
+  "brand": "Mi",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6710a7611b48802881491d0e"
+  },
+  "phoneName": "Redmi 12 5G",
+  "price": "13,999",
+  "thumbnail": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/2/t/7/13-5g-2406ern9ci-redmi-original-imah3gnsfhkrweza.jpeg?q=70",
+  "description": " Display: Large 17.24cm FHD+ 120Hz AdaptiveSync display with Corning Gorilla Glass 3 Protection, TÜV Rheinland low blue light, TÜV flicker-free, TÜV Circadian Friendly, Wet finger touch display Processor: Qualcomm Snapdragon 4 Gen2 Accelerated Edition Octa-core processor for high performance ; Up to 2.3GHz; Android 14 with Xiaomi HyperOS, Upto 12GB RAM including 6GB Virtual RAM Camera: 108MP f/1.75 Dual camera with 3X In-Sensor Zoom, classic film filters, Portrait, Night Mode,HDR, 108MP mode, Time-lapse, Google lens, Macro Video | 13MP Selfie camera Battery: 5030 mAh large battery with 33W fast charger in-box and Type-C connectivity Side Fingerprint Sensor, 3.5mm Jack, IR Blaster, IP53",
+  "brand": "Mi",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6710b2b3c85a8118e790e135"
+  },
+  "phoneName": "Iphone 13",
+  "price": "48,999",
+  "thumbnail": "https://rukminim2.flixcart.com/image/416/416/ktketu80/mobile/8/z/w/iphone-13-mlph3hn-a-apple-original-imag6vzzhrxgazsg.jpeg?q=70&crop=false",
+  "description": "\niPhone 13. boasts an advanced dual-camera system that allows you to click mesmerising pictures with immaculate clarity. Furthermore, the lightning-fast A15 Bionic chip allows for seamless multitasking, elevating your performance to a new dimension. A big leap in battery life, a durable design, and a bright Super Retina XDR display facilitate boosting your user experience.",
+  "brand": "Iphone",
+  "__v": 0
+}]

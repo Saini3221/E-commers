@@ -7,6 +7,7 @@ import { UserContext } from "../Context/UserContext";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  
 
   const { user, setUser, userData ,setUserData } = useContext(UserContext);
   // console.log(userData) ;

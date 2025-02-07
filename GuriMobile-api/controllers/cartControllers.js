@@ -10,107 +10,100 @@ const calculateCartTotal = (items) => {
 
 
 // 1. Add item to cart
+const Mobile = require('../model/mobileModel'); // Adjust the path as necessary
 const addItemToCart = async (req, res) => {
-    const { userId, items } = req.body;
 
-    if (!Array.isArray(items) || items.length === 0) {
-        return res.status(400).json({ error: "Items array is empty or not provided" });
-    }
 
-    try {
-        let cart = await Cart.findOne({ userId });
-        console.log("Fetched Cart:", cart);
-
-        if (!cart) {
-            cart = new Cart({ userId, items, cartTotal: calculateCartTotal(items) });
-            console.log("New Cart Created:", cart);
-        } else {
-            items.forEach(item => {
-                const existingItem = cart.items.find(i => i.productId.equals(item.productId));
-                if (existingItem) {
-                    existingItem.quantity += item.quantity;
-                    existingItem.totalPrice = existingItem.price * existingItem.quantity;
-                } else {
-                    item.totalPrice = item.price * item.quantity;
-                    cart.items.push(item);
-                }
+        const { itemId, quantity } = req.body;
+        const userId = req.user.id; // JWT token ton user id
+      
+        if (!itemId || !quantity) {
+          return res.status(400).json({ message: "Product ID and quantity are required" });
+        }
+      
+        try {
+          // Step 1: Product details fetch karo
+          const item = await Mobile.findById(itemId);
+          if (!item) {
+            return res.status(404).json({ message: "Product not found" });
+          }
+      
+          // Step 2: Cart check karo, already hai ya nahi
+          let cartItem = await Cart.findOne({ userId, "item.id": itemId });
+      
+          if (cartItem) {
+            // If exists, update quantity
+            cartItem.quantity += quantity;
+            await cartItem.save();
+            return res.status(200).json({ message: "Cart updated successfully!", cart: cartItem });
+          } else {
+            // If new, save with item details
+            const newCartItem = new Cart({
+              userId,
+              item: {
+                id: item._id,
+                price: item.price,
+                name: item.name,
+                image: item.thumbnail,
+              },
+              quantity,
             });
-            cart.cartTotal = calculateCartTotal(cart.items);
-            console.log("Updated Cart with Items:", cart);
+      
+            await newCartItem.save();
+            return res.status(201).json({ message: "Item added to cart!", cart: newCartItem });
+          }
+        } catch (error) {
+          console.error("Error adding to cart:", error);
+          res.status(500).json({ message: "Server error" });
         }
-
-        await cart.save();
-        console.log("Cart Saved Successfully:", cart);
-        res.status(201).json(cart);
-    } catch (error) {
-        console.error("Internal Server Error:", error.message);
-        res.status(500).json({ error: error.message });
-    }
-};
+      };
 
 
 
-// 2. Get user's cart
-const getCart = async (req, res) => {
-    const { userId } = req.params;
 
-    try {
-        const cart = await Cart.findOne({ userId });
+      // 2. Get user's cart
+      const getCart = async (req, res) => {
+        const userId = req.user.id;
+        // console.log(userId);
+        const cart = await Cart.find({ userId });
         if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
+          return res.status(404).json({ message: "Cart not found" });
         }
+
         res.json(cart);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+        
+      }
+
+
+const removeItemFromCart = async (req, res) => {
+  const _id = req.headers.id;
+if (!_id) {
+  return res.status(400).json({ message: "Product ID are required" });
+}
+ // Step 2: Cart check karo, already hai ya nahi
+ let cartItem = await Cart.findByIdAndDelete({_id });
+res.send(cartItem);
+
 };
 
 // 3. Update item quantity
 const updateItemQuantity = async (req, res) => {
-    const { userId } = req.params;
-    const { productId, quantity } = req.body;
+   let _id = req.headers.id;
+   console.log(_id);
+   let quantity = req.body.quantity;
+   console.log(quantity);
+   
+   if (!_id && !quantity) {
+       return res.status(400).json({ message: "Product ID and quantity are required" });
+   }
+    let cartItem = await Cart.findByIdAndUpdate(_id, { quantity: quantity }, { new: true })
 
-    try {
-        const cart = await Cart.findOne({ userId });
-
-        if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
-        }
-
-        const item = cart.items.find(i => i.productId.equals(productId));
-        if (item) {
-            item.quantity = quantity; // Update quantity
-            item.totalPrice = item.price * quantity; // Update total price
-            cart.cartTotal = calculateCartTotal(cart.items); // Recalculate cart total
-            await cart.save();
-            res.json(cart);
-        } else {
-            res.status(404).json({ message: 'Item not found in cart' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    res.send(cartItem);
 };
+
+
 
 // 4. Remove item from cart
-const removeItemFromCart = async (req, res) => {
-    const { userId, productId } = req.params;
-
-    try {
-        const cart = await Cart.findOne({ userId });
-
-        if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
-        }
-
-        cart.items = cart.items.filter(i => !i.productId.equals(productId)); // Remove item
-        cart.cartTotal = calculateCartTotal(cart.items); // Recalculate cart total
-        await cart.save();
-        res.json(cart);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
 
 // Exporting the controller functions
 module.exports = {

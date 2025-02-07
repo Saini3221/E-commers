@@ -10,7 +10,7 @@ function Card({ img, phoneName, price }) {
           </div>
 
           <div className="w-[25vh] flex justify-center items-center h-[35vh] m-[2vh]">
-            <img src={img} alt={phoneName} className="w-fit h-[100%]" />
+            <img src={img} alt={name} className="w-fit h-[100%]" />
           </div>
         </div>
       </div>

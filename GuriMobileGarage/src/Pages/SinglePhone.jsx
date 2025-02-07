@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 
 function SinglePhone() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [mobileData, setMobileData] = useState({});
   const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
   const { user } = useContext(UserContext);
-  
+  const token = localStorage.getItem("usertoken");
+  const itemId = id;
  
 
   useEffect(() => {
@@ -39,18 +41,26 @@ function SinglePhone() {
   const handleAddToCart = () => {
     if (!user) {
       alert("Please login to add items to the cart.");
+      
+      navigate("/login");
       return;
     }
 
     // Send request to add item to cart with the selected quantity
     axios
-      .post("http://localhost:8000/cart/add", { id, quantity })
+      .post("http://localhost:8000/cart/",  { itemId, quantity }, 
+        { headers: { Authorization: `Bearer ${token}` }})
       .then((response) => {
         console.log(response.data);
         
         alert("Item added to cart successfully!");
       })
       .catch((error) => {
+        if (error.response.status === 404) {
+          alert("Product not found");
+          // navigate("/login");
+          return;
+        }
         console.error("Error adding item to cart:", error);
       });
   };
@@ -119,3 +129,29 @@ function SinglePhone() {
 }
 
 export default SinglePhone;
+
+
+
+
+// const handleAddToCart = (e) => {
+//   e.preventDefault();
+
+//   if (!user) {
+//     navigate("/login")
+//   } else {
+//     dispatch(
+//       addToCart({
+//         token: user.token,
+//         productdata: {
+//           productId: product?._id,
+//           name: product?.name,
+//           image: product?.image,
+//           price: product?.price,
+//           qty: qty,
+//           discount: product?.discount,
+//         },
+//       })
+//     );
+//   }
+
+// };

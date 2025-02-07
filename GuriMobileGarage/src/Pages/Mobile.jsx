@@ -38,7 +38,7 @@ function Mobile() {
                 <Link to={"/mobile/" + mobile._id} key={mobile._id}>
                   <Card
                     img={mobile.thumbnail}
-                    phoneName={mobile.phoneName}
+                    phoneName={mobile.name}
                     price={"₹" + mobile.price}
                   />
                 </Link>

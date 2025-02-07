@@ -12,6 +12,13 @@
     const navigate = useNavigate();
     const { setUser , setUserData } = useContext(UserContext);
 
+
+  
+       
+
+
+
+
     function submit(e) {
       e.preventDefault();
 
@@ -23,7 +30,7 @@
             localStorage.setItem("role",Response.data.role)
             setUserData(true)
           }
-          // localStorage.setItem("userRole",Response.data.role)
+          // localStorage.setItem("role",Response.data.role)
           // localStorage.setItem("username",Response.data.username)
           setUser(true);
 
@@ -76,3 +83,31 @@
   }
 
   export default Login;
+
+
+
+
+
+
+  // const handleAddToCart = (e) => {
+  //   e.preventDefault();
+
+  //   if (!user) {
+  //     navigate("/login")
+  //   } else {
+  //     dispatch(
+  //       addToCart({
+  //         token: user.token,
+  //         productdata: {
+  //           productId: product?._id,
+  //           name: product?.name,
+  //           image: product?.image,
+  //           price: product?.price,
+  //           qty: qty,
+  //           discount: product?.discount,
+  //         },
+  //       })
+  //     );
+  //   }
+
+  // };

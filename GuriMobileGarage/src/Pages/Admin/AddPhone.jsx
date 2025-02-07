@@ -5,9 +5,9 @@ import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 function AddPhone() {
-  const [phoneName, setPhoneName] = useState("");
+  const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [phoneStock, setPhoneStock] = useState("");
+  const [stock, setStock] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
@@ -17,8 +17,8 @@ function AddPhone() {
     e.preventDefault();
     axios
       .post("http://localhost:8000/mobile/createMobile", {
-        phoneName,
-        phoneStock,
+        name,
+        stock,
         price,
         thumbnail,
         description,
@@ -41,20 +41,20 @@ function AddPhone() {
         <div className="flex h-full flex-col justify-center items-center ">
           <input
             type="text"
-            value={phoneName}
+            value={name}
             className=" w-[30%] h-12 m-2"
             placeholder="Name"
             onChange={(e) => {
-              setPhoneName(e.target.value);
+              setName(e.target.value);
             }}
           />
           <input
             type="number"
-            value={phoneStock}
+            value={stock}
             className=" w-[30%] h-12 m-2"
             placeholder="Stock"
             onChange={(e) => {
-              setPhoneStock(e.target.value);
+              setStock(e.target.value);
             }}
           />
           <input

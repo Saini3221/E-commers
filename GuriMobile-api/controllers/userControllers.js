@@ -6,11 +6,20 @@ const secretKey = process.env.SECRET_KEY; // .env se secret key le
 
 const createUser = async (req, res) => {
     let data = req.body;
-
+    try{
+    const existingUser = await User.findOne({ email: data.email });
+    if (existingUser) {
+        return res.status(400).json({ error: "User already exists" });
+    }
     let newUser = await new User(data).save();
     console.log(newUser)
     res.send(newUser);
-};
+}
+
+catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+
+}}
 
 
 

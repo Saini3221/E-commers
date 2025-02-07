@@ -18,7 +18,7 @@ function Register() {
     setError(""); // Reset error on each attempt
 
     try {
-      axios.post(
+      await axios.post(
         "http://localhost:8000/user/createuser",
         {
           username,
@@ -27,10 +27,14 @@ function Register() {
         }
       );
       navigate("/login");
-      
+      alert("Registration successful! 🎉");
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setError("Email already exists."); // Display error message
+      } else {
+        setError("Something went wrong....."); // Display error message
+      }
       console.error(error);
-      setError("Registration failed. Please try again."); // Display error message
     }
   }
 

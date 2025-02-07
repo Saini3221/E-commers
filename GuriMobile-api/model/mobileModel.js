@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const mobileSchema = new mongoose.Schema({
-  phoneName: {
+  name: {
     type: String,
     required: true,
   },
@@ -9,7 +9,7 @@ const mobileSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  phoneStock: {
+  stock: {
     type: Number,
     required: true,
   },

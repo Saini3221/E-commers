@@ -6,13 +6,13 @@ import { UserContext } from "../../Context/UserContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import { useNavigate} from "react-router-dom";
+// import { useNavigate} from "react-router-dom";
 
 function UpdatePhone() {
   const [mobileData, setMobileData] = useState([]);
   const [loding, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -37,7 +37,8 @@ function UpdatePhone() {
       .delete("http://localhost:8000/mobile/deleteMobile", { headers: { id } })
       .then(() => {
         alert("Phone Deleted successfully!");
-        navigate("/dashboard");
+        // navigate("/dashboard");
+        setMobileData(mobileData.filter((item) => item._id !== id));
      
       })
       .catch((e) => {

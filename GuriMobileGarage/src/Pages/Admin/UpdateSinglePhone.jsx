@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateSinglePhone() {
-  const [phoneName, setPhoneName] = useState("");
+  const [name,setName] = useState("");
   const [price, setPrice] = useState("");
   const [phoneStock, setPhoneStock] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -20,7 +20,7 @@ function UpdateSinglePhone() {
       .get("https://e-commers-backend-7q8r.onrender.com/mobile/findSingle", { headers: { id } })
       .then((response) => {
         const data = response.data;
-        setPhoneName(data.phoneName || "");
+        setName(data.name || "");
         setPrice(data.price || "");
         setPhoneStock(data.phoneStock || "");
         setThumbnail(data.thumbnail || "");
@@ -38,7 +38,7 @@ function UpdateSinglePhone() {
     await axios
       .put(
         "https://e-commers-backend-7q8r.onrender.com/mobile/upDateMobile",
-        { phoneName, phoneStock, price, thumbnail, description, brand },
+        { name, phoneStock, price, thumbnail, description, brand },
         { headers: { id } }
       )
       .then(() => {
@@ -58,10 +58,10 @@ function UpdateSinglePhone() {
         <div className="flex h-full flex-col justify-center items-center ">
           <input
             type="text"
-            value={phoneName}
+            value={name}
             className="w-[30%] h-12 m-2"
             placeholder="Name"
-            onChange={(e) => setPhoneName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
           <input
             type="number"

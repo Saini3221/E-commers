@@ -1,5 +1,5 @@
 import Carousel from "../components/Carousel";
-import Navbar1 from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 // import Card from "../components/Card"
 
@@ -12,7 +12,7 @@ function Home() {
   ];
   return (
     <div className="h-screen flex flex-col gap-1 justify-between">
-      <Navbar1 />
+      <Navbar />
       <div className="w-full flex gap-[2vh] justify-center items-center">
         <div className="w-[100%]">
           <Carousel slides={slides} />

@@ -1,11 +1,5 @@
 const express = require("express");
-
-
-
 const server = express();
-
-
-
 
 const userRouter =require("./routers/uesrRouter");
 const mobileRouter =require("./routers/mobileRouter");
@@ -37,10 +31,9 @@ ConnectedDB().then(()=>{
     server.listen(port,()=>{console.log(`server is running at port no ${port}`);
     })
 })
-// .catch((e)=>{
-//     console.log(e)
-// })
-
+.catch((err)=>{
+    console.log(err);
+})
 
 
 

@@ -1,111 +1,104 @@
-const Cart = require('../model/cartModel'); // Adjust the path as necessary
+const Cart = require('../model/cartModel');
+const Mobile = require('../model/mobileModel');
 
-// Helper function to calculate cart total
-const calculateCartTotal = (items) => {
-    return items.reduce((total, item) => {
-        const itemTotal = (item.price || 0) * (item.quantity || 1); // Handle undefined values
-        return total + itemTotal;
-    }, 0);
+// Helper function to calculate total amount
+const calculateCartTotal = async (userId) => {
+    const cartItems = await Cart.find({ userId });
+    return cartItems.reduce((total, item) => total + (item.item.price * item.quantity), 0);
 };
 
-
-// 1. Add item to cart
-const Mobile = require('../model/mobileModel'); // Adjust the path as necessary
+// **1. Add item to cart**
 const addItemToCart = async (req, res) => {
-
-
+    try {
         const { itemId, quantity } = req.body;
-        const userId = req.user.id; // JWT token ton user id
-      
+        const userId = req.user.id;
+
         if (!itemId || !quantity) {
-          return res.status(400).json({ message: "Product ID and quantity are required" });
+            return res.status(400).json({ message: "Product ID and quantity are required" });
         }
-      
-        try {
-          // Step 1: Product details fetch karo
-          const item = await Mobile.findById(itemId);
-          if (!item) {
-            return res.status(404).json({ message: "Product not found" });
-          }
-      
-          // Step 2: Cart check karo, already hai ya nahi
-          let cartItem = await Cart.findOne({ userId, "item.id": itemId });
-      
-          if (cartItem) {
-            // If exists, update quantity
+
+        const item = await Mobile.findById(itemId);
+        if (!item) return res.status(404).json({ message: "Product not found" });
+
+        let cartItem = await Cart.findOne({ userId, "item.id": itemId });
+
+        if (cartItem) {
             cartItem.quantity += quantity;
             await cartItem.save();
-            return res.status(200).json({ message: "Cart updated successfully!", cart: cartItem });
-          } else {
-            // If new, save with item details
-            const newCartItem = new Cart({
-              userId,
-              item: {
-                id: item._id,
-                price: item.price,
-                name: item.name,
-                image: item.thumbnail,
-              },
-              quantity,
+        } else {
+            cartItem = await Cart.create({
+                userId,
+                item: { id: item._id, price: item.price, name: item.name, image: item.thumbnail },
+                quantity,
             });
-      
-            await newCartItem.save();
-            return res.status(201).json({ message: "Item added to cart!", cart: newCartItem });
-          }
-        } catch (error) {
-          console.error("Error adding to cart:", error);
-          res.status(500).json({ message: "Server error" });
         }
-      };
 
+        const totalAmount = await calculateCartTotal(userId);
+        res.status(200).json({ message: "Cart updated successfully!", cartItem, totalAmount });
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
 
-
-
-      // 2. Get user's cart
-      const getCart = async (req, res) => {
+// **2. Get user's cart**
+const getCart = async (req, res) => {
+    try {
         const userId = req.user.id;
-        // console.log(userId);
-        const cart = await Cart.find({ userId });
-        if (!cart) {
-          return res.status(404).json({ message: "Cart not found" });
+        const cartItems = await Cart.find({ userId });
+
+        if (!cartItems.length) {
+            return res.status(404).json({ message: "Cart is empty" });
         }
 
-        res.json(cart);
-        
-      }
-
-
-const removeItemFromCart = async (req, res) => {
-  const _id = req.headers.id;
-if (!_id) {
-  return res.status(400).json({ message: "Product ID are required" });
-}
- // Step 2: Cart check karo, already hai ya nahi
- let cartItem = await Cart.findByIdAndDelete({_id });
-res.send(cartItem);
-
+        const totalAmount = await calculateCartTotal(userId);
+        res.json({ cartItems, totalAmount });
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
-// 3. Update item quantity
+// **3. Update item quantity**
 const updateItemQuantity = async (req, res) => {
-   let _id = req.headers.id;
-   console.log(_id);
-   let quantity = req.body.quantity;
-   console.log(quantity);
-   
-   if (!_id && !quantity) {
-       return res.status(400).json({ message: "Product ID and quantity are required" });
-   }
-    let cartItem = await Cart.findByIdAndUpdate(_id, { quantity: quantity }, { new: true })
+    try {
+        const { id } = req.headers;
+        const { quantity } = req.body;
 
-    res.send(cartItem);
+        if (!id || !quantity) {
+            return res.status(400).json({ message: "Product ID and quantity are required" });
+        }
+
+        const cartItem = await Cart.findByIdAndUpdate(id, { quantity }, { new: true });
+        if (!cartItem) return res.status(404).json({ message: "Item not found in cart" });
+
+        const totalAmount = await calculateCartTotal(cartItem.userId);
+        res.json({ cartItem, totalAmount });
+    } catch (error) {
+        console.error("Error updating quantity:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
+// **4. Remove item from cart**
+const removeItemFromCart = async (req, res) => {
+    try {
+        const { id } = req.headers;
+        if (!id) return res.status(400).json({ message: "Product ID is required" });
 
+        const cartItem = await Cart.findByIdAndDelete(id);
+        if (!cartItem) return res.status(404).json({ message: "Item not found in cart" });
 
-// 4. Remove item from cart
+        const totalAmount = await calculateCartTotal(cartItem.userId);
+        const cartItems = await Cart.find({ userId: cartItem.userId });
 
-// Exporting the controller functions
+        res.json({ cartItems, totalAmount });
+    } catch (error) {
+        console.error("Error removing item from cart:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
 module.exports = {
     addItemToCart,
     getCart,

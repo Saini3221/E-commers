@@ -81,7 +81,7 @@ function UpdatePhone() {
 
                   <div className="flex justify-between w-[70%]">
                     <div className="flex flex-col justify-center items-center w-[60%]">
-                      <h1>{mobile.phoneName}</h1>
+                      <h1>{mobile.name}</h1>
                       <h1>{mobile.brand}</h1>
                       <h1>{"₹" + mobile.price}</h1>
                     </div>

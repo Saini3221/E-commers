@@ -17,7 +17,7 @@ function UpdateSinglePhone() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/mobile/findSingle", { headers: { id } })
+      .get("https://e-commers-backend-1y0o.onrender.com/mobile/findSingle", { headers: { id } })
       .then((response) => {
         const data = response.data;
         setPhoneName(data.phoneName || "");
@@ -37,7 +37,7 @@ function UpdateSinglePhone() {
 
     await axios
       .put(
-        "http://localhost:8000/mobile/upDateMobile",
+        "https://e-commers-backend-1y0o.onrender.com/mobile/upDateMobile",
         { phoneName, phoneStock, price, thumbnail, description, brand },
         { headers: { id } }
       )

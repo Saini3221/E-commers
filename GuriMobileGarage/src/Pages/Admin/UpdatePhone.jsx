@@ -16,7 +16,7 @@ function UpdatePhone() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/mobile/")
+      .get("https://e-commers-backend-1y0o.onrender.com/mobile/")
       .then((response) => {
         setLoading(false);
         setMobileData(response.data);
@@ -34,7 +34,7 @@ function UpdatePhone() {
       
     }
     await axios
-      .delete("http://localhost:8000/mobile/deleteMobile", { headers: { id } })
+      .delete("https://e-commers-backend-1y0o.onrender.com/mobile/deleteMobile", { headers: { id } })
       .then(() => {
         alert("Phone Deleted successfully!");
         // navigate("/dashboard");

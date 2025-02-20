@@ -19,7 +19,7 @@ function SinglePhone() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/mobile/findSingle", { headers: {id} })
+      .get("https://e-commers-backend-1y0o.onrender.com/mobile/findSingle", { headers: {id} })
       .then((response) => {
         setMobileData(response.data);
       })

@@ -12,7 +12,7 @@ function Mobile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/mobile/")
+      .get("https://e-commers-backend-1y0o.onrender.com/mobile/")
       .then((response) => {
         setLoading(false);
         setMobileData(response.data);

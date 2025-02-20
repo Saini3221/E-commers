@@ -20,7 +20,7 @@ function Cart() {
     if (!token) return console.log("Please login to view your cart");
 
     axios
-      .get("http://localhost:8000/cart/getcart", {
+      .get("https://e-commers-backend-1y0o.onrender.com/cart/getcart", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -53,7 +53,7 @@ function Cart() {
 
     try {
       const response = await axios.delete(
-        "http://localhost:8000/cart/removeitemfromcart",
+        "https://e-commers-backend-1y0o.onrender.com/cart/removeitemfromcart",
         {
           headers: { id },
         }
@@ -79,7 +79,7 @@ function Cart() {
 
     await axios
       .put(
-        "http://localhost:8000/cart/updateitemquantity",
+        "https://e-commers-backend-1y0o.onrender.com/cart/updateitemquantity",
         { quantity }, // ✅ Send quantity in the body
         { headers: { id } } // ✅ Headers go in the third argument
       )

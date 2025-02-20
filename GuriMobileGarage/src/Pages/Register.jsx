@@ -19,7 +19,7 @@ function Register() {
 
     try {
       await axios.post(
-        "http://localhost:8000/user/createuser",
+        "https://e-commers-backend-1y0o.onrender.com/user/createuser",
         {
           username,
           password,

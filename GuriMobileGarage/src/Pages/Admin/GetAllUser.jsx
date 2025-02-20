@@ -11,7 +11,7 @@ function GetAllUser() {
   const[loding,setLoading] =useState(true);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/user")
+      .get("https://e-commers-backend-1y0o.onrender.com/user")
       .then((response) => {
         setLoading(false)
         setUserData(response.data);

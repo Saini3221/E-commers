@@ -16,7 +16,7 @@ function AddPhone() {
   function submit(e) {
     e.preventDefault();
     axios
-      .post("https://e-commers-backend-1y0o.onrender.com/mobile/createMobile", {
+      .post("https://e-commers-backend-7q8r.onrender.com/mobile/createMobile", {
         name,
         stock,
         price,

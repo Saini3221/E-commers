@@ -19,7 +19,7 @@ function SinglePhone() {
 
   useEffect(() => {
     axios
-      .get("https://e-commers-backend-1y0o.onrender.com/mobile/findSingle", { headers: {id} })
+      .get("https://e-commers-backend-7q8r.onrender.com/mobile/findSingle", { headers: {id} })
       .then((response) => {
         setMobileData(response.data);
       })
@@ -48,7 +48,7 @@ function SinglePhone() {
 
     // Send request to add item to cart with the selected quantity
     axios
-      .post("http://localhost:8000/cart/",  { itemId, quantity }, 
+      .post("https://e-commers-backend-7q8r.onrender.com/cart/",  { itemId, quantity }, 
         { headers: { Authorization: `Bearer ${token}` }})
       .then((response) => {
         console.log(response.data);

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
+import HashLoader from "react-spinners/HashLoader";
 
 function SinglePhone() {
   const { id } = useParams();
@@ -15,13 +16,16 @@ function SinglePhone() {
   const { user } = useContext(UserContext);
   const token = localStorage.getItem("usertoken");
   const itemId = id;
+  const [loding, setLoading] = useState(true);
  
 
   useEffect(() => {
     axios
       .get("https://e-commers-backend-7q8r.onrender.com/mobile/findSingle", { headers: {id} })
       .then((response) => {
+        setLoading(false);
         setMobileData(response.data);
+
       })
       .catch((e) => {
         console.log(e);
@@ -66,7 +70,15 @@ function SinglePhone() {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-between">
+    <div className="h-screen flex flex-col justify-between"> 
+    {loding ? (
+      <div className="flex items-center justify-center w-full h-full">
+        <HashLoader color="#36d7b7" />
+      </div>) : (
+
+        
+        <div className="h-screen flex flex-col justify-between">
+
       <Navbar />
 
       <div className="flex items-center justify-evenly gap-2 w-[100%] max-[550px]:flex-col text-white">
@@ -124,6 +136,10 @@ function SinglePhone() {
         </div>
       </div>
       <Footer />
+    </div>
+              )}
+
+
     </div>
   );
 }

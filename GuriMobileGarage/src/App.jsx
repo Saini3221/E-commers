@@ -18,7 +18,7 @@ import UpdateSinglePhone from "./Pages/Admin/UpdateSinglePhone";
 import { UserContext } from "./Context/UserContext";
 import Orders from "./Pages/Admin/Orders";
 import CartNotLogin from "./Pages/CartNotLogin";
-import DeliveryAdress from "./Pages/DeliveryAdress";
+import OrderPage from "./Pages/OrderPage";
 
 function App() {
   const { user, setUser, setUserData, userData } = useContext(UserContext);
@@ -49,7 +49,7 @@ function App() {
         <Route path="/assessories" element={<Assessories />} />
         <Route path="/sale" element={<SalePhone />} />
         <Route path="/cart" element={user ? <Cart /> : <CartNotLogin />} />
-        <Route path="/deliveryadress" element={user ? <DeliveryAdress /> : <NotFound />} />
+        <Route path="/orderpage" element={user ? <OrderPage /> : <NotFound />} />
         <Route path="/mobile/:id" element={<SinglePhone />} />
         <Route path="/*" element={<NotFound />} />
         <Route

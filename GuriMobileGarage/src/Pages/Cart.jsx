@@ -30,9 +30,9 @@ function Cart() {
         if (response.status === 404) {
           console.log("Cart not found");
         }
+        setLoading(false);
         setCartData(response.data.cartItems);
         setCartTotal(response.data.totalAmount);
-        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -49,7 +49,6 @@ function Cart() {
   //Calculate total amount
   useEffect(() => {
     const totalAmount = cartData.reduce((acc, item) => acc + item.item.price * item.quantity, 0);
-    setLoading(false);
     setCartSum(totalAmount);}, [cartData]);
 
   // Remove item from cart API

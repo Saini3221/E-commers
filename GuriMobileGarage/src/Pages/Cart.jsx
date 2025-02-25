@@ -30,9 +30,9 @@ function Cart() {
         if (response.status === 404) {
           console.log("Cart not found");
         }
-        setLoading(false);
         setCartData(response.data.cartItems);
         setCartTotal(response.data.totalAmount);
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -43,7 +43,6 @@ function Cart() {
 
   useEffect(() => {
     const totalQty = cartData.reduce((acc, item) => acc + item.quantity, 0);
-    setLoading(false);
     setTotalQuantity(totalQty);
   }, [cartData]); // ✅ Run when cartData updates
   
@@ -73,7 +72,7 @@ function Cart() {
       alert("Item removed from cart successfully!");
 
       // ✅ Update cart data and total amount dynamically
-      setLoading(false);
+
       setCartData(response.data.cartItems);
       setCartTotal(response.data.totalAmount);
     } catch (e) {
@@ -94,7 +93,7 @@ function Cart() {
         console.log(response.data);
 
         // ✅ **Cart Quantity Update**
-        setLoading(false);
+   
         setCartData((prevCart) =>
           prevCart.map((item) =>
             item._id === id

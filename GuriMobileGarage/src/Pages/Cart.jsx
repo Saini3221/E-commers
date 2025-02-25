@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
 import { Link } from "react-router-dom";
 
 function Cart() {
@@ -11,6 +12,8 @@ function Cart() {
   const [cartSum, setCartSum] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [loding, setLoading] = useState(true);
+
 
   // const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("usertoken"); // Get user ID from local storage or any auth method
@@ -27,6 +30,7 @@ function Cart() {
         if (response.status === 404) {
           console.log("Cart not found");
         }
+        setLoading(false);
         setCartData(response.data.cartItems);
         setCartTotal(response.data.totalAmount);
       })
@@ -39,12 +43,14 @@ function Cart() {
 
   useEffect(() => {
     const totalQty = cartData.reduce((acc, item) => acc + item.quantity, 0);
+    setLoading(false);
     setTotalQuantity(totalQty);
   }, [cartData]); // ✅ Run when cartData updates
   
   //Calculate total amount
   useEffect(() => {
     const totalAmount = cartData.reduce((acc, item) => acc + item.item.price * item.quantity, 0);
+    setLoading(false);
     setCartSum(totalAmount);}, [cartData]);
 
   // Remove item from cart API
@@ -67,6 +73,7 @@ function Cart() {
       alert("Item removed from cart successfully!");
 
       // ✅ Update cart data and total amount dynamically
+      setLoading(false);
       setCartData(response.data.cartItems);
       setCartTotal(response.data.totalAmount);
     } catch (e) {
@@ -87,6 +94,7 @@ function Cart() {
         console.log(response.data);
 
         // ✅ **Cart Quantity Update**
+        setLoading(false);
         setCartData((prevCart) =>
           prevCart.map((item) =>
             item._id === id
@@ -116,6 +124,14 @@ function Cart() {
   };
 
   return (
+<div className="h-screen flex flex-col justify-between">
+{loding ? (
+        <div className="flex items-center justify-center w-full h-full">
+          <HashLoader color="#36d7b7" />
+        </div>
+      ) : (
+
+
     <div className="h-full flex flex-col justify-between">
       <Navbar />
 
@@ -212,6 +228,8 @@ function Cart() {
 
       <Footer />
     </div>
+      )}
+</div>
   );
 }
 
